@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 public class HeartbeatController : ControllerBase
 {
     [HttpGet]
-    public IActionResult Get()
+    public IActionResult getHeartbeat()
     {
         object payload = new
         {
