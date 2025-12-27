@@ -1,0 +1,6 @@
+@TheElectricMeatball_HostAddress = http://localhost:5198
+
+GET {{TheElectricMeatball_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
