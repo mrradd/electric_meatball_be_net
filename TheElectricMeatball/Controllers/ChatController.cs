@@ -7,10 +7,10 @@ using OpenAI.Chat;
 [Produces("application/json")]
 public class ChatController : ControllerBase
 {
-    private readonly IConfiguration _config;
-    public ChatController(IConfiguration config)
+    private readonly ChatBusinessLogic _chatBusinessLogic;
+    public ChatController(IConfiguration config, ChatBusinessLogic chatBusinessLogic)
     {
-        _config = config;
+        _chatBusinessLogic = chatBusinessLogic;
     }
 
     [HttpPost]
@@ -18,12 +18,8 @@ public class ChatController : ControllerBase
     {
         try
         {
-            ChatClient client = new(model: "gpt-4o", apiKey: _config.GetValue<string>("OPENAI_API_KEY"));
-
-            ChatCompletion completion = client.CompleteChat("Say 'this is a test.'");
-
-            Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
-            return Ok(completion.Content[0].Text);
+            ChatResponseDto responseDto = _chatBusinessLogic.sendChatRequest(chatRequestDto.Message, chatRequestDto.Model, chatRequestDto.ChatThreadId);
+            return StatusCode(StatusCodes.Status201Created, responseDto);
         }
         catch (Exception ex)
         {

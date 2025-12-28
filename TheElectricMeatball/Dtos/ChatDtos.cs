@@ -1,16 +1,17 @@
+using OpenAI.FineTuning;
+
 public class ChatRequestDto
 {
-    string message;
-    string model;
-    Guid chatThreadId;
+    public string Message {get; set;}
+    public string Model {get; set;}
+    public Guid ChatThreadId {get; set;}
 }
 
 public class ChatResponseDto
 {
-    Guid id;
-    Guid chatThreadId;
-    DateTime createdDate;
-    string message;
-    string response;
-    string model;
+    public Guid Id {get; set;}
+    public Guid ChatThreadId {get; set;}
+    public DateTime CreatedDate {get; set;}
+    public string Response {get; set;}
+    public string Role {get; set;}
 }
