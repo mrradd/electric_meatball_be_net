@@ -1,5 +1,4 @@
 using BusinessLogic;
-using dtos;
 using Dtos;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,21 +8,21 @@ namespace Controllers
     [Route("api/v1/[controller]")]
     [Consumes("application/json")]
     [Produces("application/json")]
-    public class ChatController : ControllerBase
+    public class ThreadController : ControllerBase
     {
-        private readonly ChatBusinessLogic _chatBusinessLogic;
-        public ChatController(IConfiguration config, ChatBusinessLogic chatBusinessLogic)
+        private readonly ThreadBusinessLogic _threadBusinessLogic;
+        public ThreadController(ThreadBusinessLogic threadBusinessLogic)
         {
-            _chatBusinessLogic = chatBusinessLogic;
+            _threadBusinessLogic = threadBusinessLogic;
         }
 
         [HttpPost]
-        public ActionResult<ChatResponseDto> sendChat([FromBody] ChatRequestDto chatRequestDto)
+        public ActionResult<CreateThreadResponseDto> saveThread([FromBody] CreateThreadRequestDto threadRequestDto)
         {
             try
             {
-                ChatResponseDto responseDto = _chatBusinessLogic.sendChatRequest(chatRequestDto.Message, chatRequestDto.Model, chatRequestDto.ChatThreadId);
-                return StatusCode(StatusCodes.Status201Created, responseDto);
+                CreateThreadResponseDto responseDto = _threadBusinessLogic.createNewThread(threadRequestDto.name);
+                return StatusCode(StatusCodes.Status201Created, "yay");
             }
             catch (Exception ex)
             {

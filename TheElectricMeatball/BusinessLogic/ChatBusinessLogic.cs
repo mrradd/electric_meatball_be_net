@@ -1,24 +1,28 @@
+using dtos;
 using OpenAI.Chat;
 
-public class ChatBusinessLogic
+namespace BusinessLogic
 {
-    private readonly IConfiguration _config;
-    public ChatBusinessLogic(IConfiguration config)
+    public class ChatBusinessLogic
     {
-        _config = config;
-    }
-
-    public ChatResponseDto sendChatRequest(string message, string model, Guid threadId)
-    {
-        ChatClient client = new(model: model, apiKey: _config.GetValue<string>("OPENAI_API_KEY"));
-        ChatCompletion completion = client.CompleteChat(message);
-        Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
-        ChatResponseDto responseDto = new ChatResponseDto()
+        private readonly IConfiguration _config;
+        public ChatBusinessLogic(IConfiguration config)
         {
-            Response = completion.Content[0].Text,
-        };
-        //TODO CH Save new message to DB.
-        //TODO CH Save response to DB.
-        return responseDto;
+            _config = config;
+        }
+
+        public ChatResponseDto sendChatRequest(string message, string model, Guid threadId)
+        {
+            ChatClient client = new(model: model, apiKey: _config.GetValue<string>("OPENAI_API_KEY"));
+            ChatCompletion completion = client.CompleteChat(message);
+            Console.WriteLine($"[ASSISTANT]: {completion.Content[0].Text}");
+            ChatResponseDto responseDto = new ChatResponseDto()
+            {
+                Response = completion.Content[0].Text,
+            };
+            //TODO CH Save new message to DB.
+            //TODO CH Save response to DB.
+            return responseDto;
+        }
     }
 }
