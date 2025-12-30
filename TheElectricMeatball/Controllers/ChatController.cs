@@ -12,7 +12,7 @@ namespace Controllers
     public class ChatController : ControllerBase
     {
         private readonly ChatBusinessLogic _chatBusinessLogic;
-        public ChatController(IConfiguration config, ChatBusinessLogic chatBusinessLogic)
+        public ChatController(ChatBusinessLogic chatBusinessLogic)
         {
             _chatBusinessLogic = chatBusinessLogic;
         }
